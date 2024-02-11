@@ -213,10 +213,8 @@ trips2021_cleaned %>%
   labs(title = "Most popular start station for members",
        x = "Number of rides", y = "Start station name")
 ```
-```{r Top 10 Most poular stations for casual riders}
-
 <img width="568" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/ef1ade93-fce6-49c8-91ce-ad7b3af20f09">
-
+```{r Top 10 Most poular stations for casual riders}
 trips2021_cleaned %>% 
   group_by(rider_type, start_station_name) %>% 
   filter(rider_type == "casual") %>% 
@@ -241,6 +239,7 @@ trips2021_cleaned %>%
   geom_col(position = "dodge") +
   labs(x = "Bike type", y = "Number of bikes", fill = "Rider type")
 ```
+<img width="554" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/3f7ae490-f787-4b44-98e4-bfc87870438a">
 
 ### Share
 The key insights gleaned from the analysis are as follows:
