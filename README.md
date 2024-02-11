@@ -136,6 +136,7 @@ trips2021_cleaned %>%
   theme_void()
 ```
 
+<img width="677" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/c8cf10ea-67c1-40ce-9a03-7840d43fafd3">
 
 ### Share
 The key insights gleaned from the analysis are as follows:
