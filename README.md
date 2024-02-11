@@ -214,7 +214,8 @@ trips2021_cleaned %>%
        x = "Number of rides", y = "Start station name")
 ```
 ```{r Top 10 Most poular stations for casual riders}
-<img width="581" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/89d9bd42-ff6a-4489-bdbc-b0c7432273d0">
+
+<img width="568" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/ef1ade93-fce6-49c8-91ce-ad7b3af20f09">
 
 trips2021_cleaned %>% 
   group_by(rider_type, start_station_name) %>% 
@@ -231,43 +232,7 @@ trips2021_cleaned %>%
 
 The top start stations are different for members and casual riders. Streeter Dr & Grand Ave is by far the most popular station for casual riders followed by Millennium Park and Michigan Ave and Oak St. The top three start stations for members are Clark St & Elm St, Wells St & Concord Ln, and Kingsbury St & Kinzie St.
 
-## 7.Most popular route for members with average duration
-```{r Most popular route for members}
-#For Members
-#trips2021_cleaned %>% 
- # group_by(rider_type, route) %>% 
- # summarise(Number_of_rides = n()) %>% 
- # arrange(desc(Number_of_rides)) %>% 
- # head(10)
-
-#route_member <- trips2021_cleaned %>% 
- # group_by(rider_type, route) %>% 
- # filter(rider_type == "member") %>% 
- # summarise(Number_of_rides = n(), ride_duration = mean(ride_duration)) %>% 
- # arrange(desc(Number_of_rides)) %>% 
- # head(10)
-  #Plot of Most popular routes for members
-#ggplot(route_member) + 
- #geom_col(aes(x = Number_of_rides, y = reorder(route, Number_of_rides))) +
-  #labs(title = "Most popular route for members",
-    #  x = "Number of rides", y = "Route")
-```
-```{r Most popular route for casual Riders}
-
-#route_casual <- trips2021_cleaned %>% 
-  #group_by(rider_type, route) %>% 
-  #filter(rider_type == "casual") %>% 
-  #summarise(Number_of_rides = n(), avg_ride_duration = mean(ride_duration)) %>% 
-  #arrange(desc(Number_of_rides)) %>% 
-  #head(10)
-
- # Plot of Most popular routes for casual riders
-#ggplot(route_casual) + 
- # geom_col(aes(x = Number_of_rides, y = reorder(route, Number_of_rides))) +
-  #labs(title = "Most Popular route for Casual Riders",
-     #  x = "Number of rides", y = "Route")
-```
-## 8.Types of bike used by the riders
+## 7.Types of bike used by the riders
 ```{r Types of bike used by the riders}
 trips2021_cleaned %>% 
   group_by(rider_type, bike_type) %>% 
