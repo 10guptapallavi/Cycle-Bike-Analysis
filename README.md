@@ -138,6 +138,145 @@ trips2021_cleaned %>%
 
 <img width="677" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/c8cf10ea-67c1-40ce-9a03-7840d43fafd3">
 
+Members use Cylistic bikes more than the casual riders.Members account for 55% of the total rides while casual riders completed 45% of the total rides.Let's examine the average duration of the trips
+## 2.Average ride duration
+```{r Average ride duration}
+trips2021_cleaned %>% 
+  group_by(rider_type) %>% 
+  summarise(avg_ride_duration = round(mean(ride_duration)))%>% 
+  ggplot(aes(x = rider_type, y = avg_ride_duration)) + 
+  geom_col(position = "dodge", fill = "black") +
+  labs( x = "Rider type", y = "Average ride duration (mins)")
+```
+<img width="606" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/98609873-15d8-4cdc-9f27-08a0796baccf">
+
+casual members ride the bikes longer than members. The average ride duration for casual riders is more than twice for members.
+
+## 3.Compute and visualize the monthly ride distribution
+
+```{r Compute and visualize the monthly ride distribution}
+trips2021_cleaned %>% 
+  group_by(rider_type, month) %>% 
+  summarise(total_rides = n()) %>% 
+  arrange(month) %>% 
+  ggplot(aes(x = month, y = total_rides, fill = rider_type)) +
+  geom_col(position = "dodge") +
+  labs(title = "Monthly bike rides by rider type",
+       x = "Month", y = "Number of rides", fill = "Rider type")
+```
+<img width="538" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/40f627c9-f5e4-440f-b65b-89a44cc403eb">
+
+The casual riders’ bike usage was significantly lower than the usage by members from February to April. The bike usage by casual riders and members started to rise in the spring (from March to May) following a dip in the winter months (December to March) with members leading the pack.
+
+## 4.Distribution of weekly bike usage
+```{r Distribution of weekly bike usage}
+trips2021_cleaned %>% 
+  group_by(rider_type, weekday) %>% 
+  summarise(total_rides = n()) %>% 
+  ggplot(aes(x = weekday, y = total_rides, fill = rider_type)) +
+  geom_col(position = "dodge") +
+  labs(title = "Weekly bike usage distribution", 
+       fill = "Rider type", x = "Weekday",
+       y = "Number of rides")
+```
+<img width="522" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/c05a7f0d-634f-4eae-991e-04aab05adf6b">
+
+We observed that casual riders seem to use the bikes more for leisure while the members seem more likely to use the bike to commute to and from work. Casual riders used the bikes far more on weekends. Their usage starts to rise on Fridays and moves up significantly on Saturdays and Sundays from the fairly consistent level on weekdays. Members' usage is fairly consistent throughout the week.
+## 5.Hourly Distribution of bike Usage
+```{r Hourly Distribution of bike Usage}
+trips2021_cleaned %>% 
+  group_by(rider_type, start_hour) %>% 
+  summarise(total_rides = n()) %>% 
+  ggplot(aes(x = start_hour, y = total_rides, fill = rider_type)) +
+  geom_col(position = "dodge") +
+    scale_x_continuous(breaks = c(0:23))+
+  labs(title = "Hourly bike rides", 
+       fill = "Rider type", x = "Hour",
+       y = "Number of rides")
+```
+<img width="499" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/961b657a-5e82-4689-966b-24de055c2287">
+
+Members use the bikes significantly more than the casual riders from 6 a.m to 9 a.m in the morning and between 4 p.m to 7 p.m in the evening. These pattern agrees with our hypothesis that the members use the bikes more for work.
+
+## 6.Most poular stations where the riders start their trip from
+
+```{r Top 10 Most poular stations for members}
+
+trips2021_cleaned %>% 
+  group_by(rider_type, start_station_name) %>% 
+  filter(rider_type == "member") %>% 
+  summarise(Number_of_rides = n()) %>% 
+  arrange(desc(Number_of_rides)) %>% 
+  head(10) %>% 
+   ggplot(aes(x = Number_of_rides, y = reorder(start_station_name, Number_of_rides))) + 
+  geom_col() +
+  labs(title = "Most popular start station for members",
+       x = "Number of rides", y = "Start station name")
+```
+```{r Top 10 Most poular stations for casual riders}
+<img width="581" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/89d9bd42-ff6a-4489-bdbc-b0c7432273d0">
+
+trips2021_cleaned %>% 
+  group_by(rider_type, start_station_name) %>% 
+  filter(rider_type == "casual") %>% 
+  summarise(Number_of_rides = n()) %>% 
+  arrange(desc(Number_of_rides)) %>% 
+  head(10) %>% 
+  ggplot(aes(x = Number_of_rides, y = reorder(start_station_name, Number_of_rides))) + 
+  geom_col() +
+  labs(title = "Most popular start station for casual riders",
+       x = "Number of rides", y = "Start station name")
+```
+<img width="545" alt="image" src="https://github.com/10guptapallavi/Cycle-Bike-Analysis/assets/157853035/87a567e0-2a19-4c26-9a26-d121551c9bb6">
+
+The top start stations are different for members and casual riders. Streeter Dr & Grand Ave is by far the most popular station for casual riders followed by Millennium Park and Michigan Ave and Oak St. The top three start stations for members are Clark St & Elm St, Wells St & Concord Ln, and Kingsbury St & Kinzie St.
+
+## 7.Most popular route for members with average duration
+```{r Most popular route for members}
+#For Members
+#trips2021_cleaned %>% 
+ # group_by(rider_type, route) %>% 
+ # summarise(Number_of_rides = n()) %>% 
+ # arrange(desc(Number_of_rides)) %>% 
+ # head(10)
+
+#route_member <- trips2021_cleaned %>% 
+ # group_by(rider_type, route) %>% 
+ # filter(rider_type == "member") %>% 
+ # summarise(Number_of_rides = n(), ride_duration = mean(ride_duration)) %>% 
+ # arrange(desc(Number_of_rides)) %>% 
+ # head(10)
+  #Plot of Most popular routes for members
+#ggplot(route_member) + 
+ #geom_col(aes(x = Number_of_rides, y = reorder(route, Number_of_rides))) +
+  #labs(title = "Most popular route for members",
+    #  x = "Number of rides", y = "Route")
+```
+```{r Most popular route for casual Riders}
+
+#route_casual <- trips2021_cleaned %>% 
+  #group_by(rider_type, route) %>% 
+  #filter(rider_type == "casual") %>% 
+  #summarise(Number_of_rides = n(), avg_ride_duration = mean(ride_duration)) %>% 
+  #arrange(desc(Number_of_rides)) %>% 
+  #head(10)
+
+ # Plot of Most popular routes for casual riders
+#ggplot(route_casual) + 
+ # geom_col(aes(x = Number_of_rides, y = reorder(route, Number_of_rides))) +
+  #labs(title = "Most Popular route for Casual Riders",
+     #  x = "Number of rides", y = "Route")
+```
+## 8.Types of bike used by the riders
+```{r Types of bike used by the riders}
+trips2021_cleaned %>% 
+  group_by(rider_type, bike_type) %>% 
+  summarise(Number_of_bikes = n()) %>% 
+  ggplot(aes(x = bike_type, y = Number_of_bikes, fill = rider_type)) + 
+  geom_col(position = "dodge") +
+  labs(x = "Bike type", y = "Number of bikes", fill = "Rider type")
+```
+
 ### Share
 The key insights gleaned from the analysis are as follows:
 
