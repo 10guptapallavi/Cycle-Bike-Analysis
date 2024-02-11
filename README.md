@@ -38,6 +38,13 @@ visualization. Following is the list of codes that I performed for solving this 
 
 ### Analysis
 The analysis is done using R programme language. Code are available in the R or html file.
+## Loading the required libraries
+```{r Loading the required libraries}
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(readr)
+```
 ### Share
 The key insights gleaned from the analysis are as follows:
 
